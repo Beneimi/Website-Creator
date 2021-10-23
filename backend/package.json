@@ -1,0 +1,34 @@
+{
+  "name": "website_creator_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "start": "nodemon src/index.ts"
+  },
+  "author": "Bene Imre Mihály",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "eslint": "^7.32.0",
+    "@types/express": "^4.17.1",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^16.7.1",
+    "@typescript-eslint/parser": "^4.29.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@types/bcryptjs": "^2.4.2",
+    "cors": "^2.8.5"
+  },
+  "dependencies": {
+    "ts-node": "^10.2.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "joi": "^17.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.7",
+    "nodemon": "^2.0.12",
+    "cookie-parser": "^1.4.5"
+  }
+}
