@@ -1,5 +1,5 @@
 import React, {Component, FormEvent, SyntheticEvent} from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {container, injectable} from "tsyringe";
 import {UserService} from "../services/UserService";
 
@@ -7,6 +7,7 @@ type loginData = {
     email: string;
     password: string;
     loggedIn: boolean;
+    errorMessage: string;
 }
 injectable()
 export default class LoginComponent extends Component<{},loginData>{
@@ -14,6 +15,7 @@ export default class LoginComponent extends Component<{},loginData>{
         email: '',
         password: '',
         loggedIn: false,
+        errorMessage: ''
     }
 
     async componentDidMount() {
@@ -34,8 +36,12 @@ export default class LoginComponent extends Component<{},loginData>{
     }
 
     async login() {
-        await container.resolve(UserService).logInUser(this.state.email, this.state.password);
-        this.setState({loggedIn: true});
+        try{
+            await container.resolve(UserService).logInUser(this.state.email, this.state.password);
+            this.setState({loggedIn: true});
+        } catch (e: any) {
+            this.setState({errorMessage: e.message})
+        }
     }
 
     async handleSubmit(event:SyntheticEvent) {
@@ -48,7 +54,7 @@ export default class LoginComponent extends Component<{},loginData>{
             console.log('redirected to home');
             return <Redirect to={{pathname:'/home'}}/>
         }
-        return <p>
+        return <div className='center-form'>
             <form method='POST' onSubmit={this.handleSubmit.bind(this)}>
                 <input name='email' placeholder='email' type="text" onChange={this.handleInputChange.bind(this)}/>
                 <p></p>
@@ -56,10 +62,11 @@ export default class LoginComponent extends Component<{},loginData>{
                 <p></p>
                 <input type='submit' title='Log in'/>
             </form>
-            <p>{this.state.email}</p>
-            <p>{this.state.password}</p>
-            <p>{this.state.loggedIn}</p>
-        </p>
+            {this.state.errorMessage ? this.state.errorMessage : ''}
+            <Link to={{pathname: `/signup`}}>
+                Még nincs fiókod?
+            </Link>
+        </div>
     }
 
 }

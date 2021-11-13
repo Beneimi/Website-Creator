@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "sourceMap": true,
     "target": "ES2021",
     "outDir": "./dist",
     "baseUrl": "./src",
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*.ts"

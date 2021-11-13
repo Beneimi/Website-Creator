@@ -5,9 +5,116 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  background: linear-gradient(135deg, #94ffed 0%, #e4f7b1 100%);
+  /*background: rgb(213,255,254);
+  background: linear-gradient(90deg, rgba(213,255,254,1) 0%, rgba(235,255,205,1) 50%, rgba(255,242,199,1) 100%);*/
+  color: #000000;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.module {
+  grid-column: 2;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #ffffff);
+  box-shadow:  5px 5px 5px #d0d0d0,
+  -2px -2px 2px #eaeaea;
+  text-align: center;
+  padding: 1em;
+  margin: 1em;
+  color: black;
+}
+
+.text-module {
+  text-align: left;
+}
+
+.moduleContainer {
+  white-space: pre-wrap;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+}
+
+.page{
+  text-align: center;
+}
+
+.center-form{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: rgba(104, 159, 98, 0.2);
+  border-radius: 10px;
+  box-shadow:  5px 5px 5px rgba(104, 159, 98, 0.2),
+  -2px -2px 2px rgba(104, 159, 98, 0.2);
+  text-align: center;
+  padding: 1em;
+  margin: 1em;
+  color: black;
+}
+
+.edit-module-button{
+  text-align: left;
+  margin: 0em 2em;
+  cursor: pointer;
+  background-color: #ced9ff;
+  color: #001580;
+  border-radius: 0.3em;
+  padding: 0.1em 0.25em;
+}
+
+.delete-page-button{
+  cursor: pointer;
+  background-color: #f6bdbd;
+  color: #b8000a;
+  border-radius: 0.3em;
+  padding: 0.1em 0.25em;
+}
+
+.edit-page-button{
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #d7dbfd;
+  color: #001583;
+  border-radius: 0.3em;
+  padding: 0.1em 0.25em;
+}
+
+.home-page-list-element{
+  text-align: left;
+  padding: 0.3em;
+}
+
+.home-page-list-element-title {
+  text-decoration: underline;
+  color: black;
+}
+
+.home-page-container{
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+}
+
+.home-page-container>*{
+  width: fit-content;
+  grid-column: 2;
+  text-align: center;
+}
+
+.home-button{
+  text-align: left;
+}
+
+.edit-textarea{
+  white-space: pre-wrap;
+}
+
+.login-label {
+
 }

@@ -11,19 +11,25 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "@types/bootstrap": "^5.1.2",
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "@types/react-router": "^5.1.17",
+    "@types/react-html-parser": "^2.0.2"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.13.0",
+    "@types/tinymce": "^4.6.4",
+    "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-html-parser": "^2.0.2",
+    "react-icons": "^4.3.1",
     "react-router-dom": "^5.2.1",
     "react-scripts": "4.0.3",
-    "typescript": "^4.4.2",
-    "tsyringe": "^4.6.0",
     "reflect-metadata": "^0.1.13",
-    "web-vitals": "^1.1.2",
-    "axios": "^0.21.1"
+    "tsyringe": "^4.6.0",
+    "typescript": "^4.4.2",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

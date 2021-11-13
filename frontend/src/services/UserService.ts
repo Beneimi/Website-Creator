@@ -1,5 +1,5 @@
 import {singleton} from "tsyringe";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {Redirect} from "react-router-dom";
 import React from "react";
 
@@ -21,8 +21,8 @@ export class UserService {
                 this.loggedIn = true;
                 this.email = email;
                 return 'asd';
-            }).catch(e => {
-                throw new Error(e);
+            }).catch((e: AxiosError) => {
+                throw new Error(e.response?.data || e.message);
             });
         console.log(result);
     }
@@ -35,8 +35,6 @@ export class UserService {
             });
     }
 
-
-
    async isUserLoggedIn(): Promise<boolean> {
         axios.defaults.withCredentials = true;
         const status = await axios.get('http://localhost:8080/api/status')
@@ -47,5 +45,16 @@ export class UserService {
             });
         console.log('loggedin')
         return status;
+    }
+
+    async registerUser(email: string, userName: string, password: string){
+        axios.defaults.withCredentials = true;
+        const result = await axios.post('http://localhost:8080/api/register/',{email:email, password: password, name: userName})
+            .then((response: any) => {
+                return response.user_id;
+            }).catch((e: AxiosError) => {
+                throw new Error(e.response?.data || e.message);
+            });
+        console.log(result);
     }
 }

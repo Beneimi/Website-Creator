@@ -15,6 +15,6 @@ export function removeHungarianSpecialCharacters(s: string) {
 
 export function urlCleanString(s: string) {
     return removeHungarianSpecialCharacters(s)
-        .replace(' ', '-')
+        .replace(/\s/g, '-')
         .replace(urlCleanRegexp, '');
 }
