@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
+import {getSecondByMinute, tokenExpiryInMinutes} from "../../frontend/src/utils";
 
 interface DecodedToken{
     _id: string;
@@ -7,7 +8,7 @@ interface DecodedToken{
 }
 
 export function createJWToken (userId: string) {
-  return jwt.sign({ _id: userId }, process.env.TOKEN_SECRET)
+  return jwt.sign({ _id: userId }, process.env.TOKEN_SECRET, {expiresIn: Date.now() + getSecondByMinute(tokenExpiryInMinutes)})
 }
 
 export function getUserIdByJWToken (token: string): string|undefined {

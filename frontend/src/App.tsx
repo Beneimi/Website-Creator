@@ -8,18 +8,17 @@ import PageComponent from "./components/page.component";
 import EditPageComponent from "./components/editPage.component";
 import NewPageComponent from "./components/newPage.component";
 import SignUpComponent from "./components/signUp.component";
-//<Redirect from='/' to={'/home'}/>
 
 function App() {
 return (
       <Router>
+          <Route exact path={'/'}  component={HomepageComponent}/>
           <Route path='/login' component={LoginComponent}/>
           <Route path='/signup' component={SignUpComponent}/>
           <Route path='/home' component={HomepageComponent}/>
           <Route path='/create' component={NewPageComponent}/>
-          <Route path='/page/:url' component={PageComponent}/>
           <Route path='/edit/page/:url' component={EditPageComponent}/>
-          <Route path='/getpage/:userName/:url' component={PageComponent}/>
+          <Route path='/page/:userName/:url' component={PageComponent}/>
       </Router>
 
   );

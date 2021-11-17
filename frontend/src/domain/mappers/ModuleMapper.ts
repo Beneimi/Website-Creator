@@ -15,13 +15,13 @@ export class ModuleMapper extends Mapper<BaseModule> {
     switch (moduleDTO.type) {
       case 'poll': {
         const pollModuleDTO = moduleDTO as PollModuleDTO
-        module = new PollModule(pollModuleDTO._id, pollModuleDTO.question)
+        module = new PollModule(pollModuleDTO._id, pollModuleDTO.question, pollModuleDTO.place)
             .setOptions(pollModuleDTO.options.map(
                 optionDTO => new PollOption(optionDTO._id, optionDTO.text, optionDTO.numberOfVotes)))
         break
       }
       case 'text' : {
-        module = new TextModule(moduleDTO._id, (moduleDTO as TextModuleDTO).content)
+        module = new TextModule(moduleDTO._id, (moduleDTO as TextModuleDTO).content, moduleDTO.place)
         break
       }
     }

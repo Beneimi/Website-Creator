@@ -5,13 +5,15 @@ export abstract class BaseModule {
     protected readonly type: ModuleType;
     protected place?: number;
 
-    protected constructor (moduleId: string, type: ModuleType) {
+    protected constructor (moduleId: string, type: ModuleType, place = 0) {
       this.id = moduleId
       this.type = type
+        this.place = place
     }
 
     public setPlace (place: number) {
-      this.place = place
+        this.place = place
+        return this
     }
 
     public getType () {

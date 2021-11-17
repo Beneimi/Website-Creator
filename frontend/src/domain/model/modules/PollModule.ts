@@ -5,8 +5,8 @@ export class PollModule extends BaseModule {
     private question: string;
     private options: PollOption[] = [];
 
-    constructor (moduleId: string, question: string) {
-      super(moduleId, 'poll')
+    constructor (moduleId: string, question: string, place = 0) {
+      super(moduleId, 'poll', place)
       this.question = question
     }
 

@@ -81,7 +81,7 @@ router.post('/deleteModule', verifyToken, async (req, res) => {
   }
 })
 
-router.post('/vote', verifyToken, async (req, res) => {
+router.post('/vote', async (req, res) => {
   try {
     const pageData = req.body
     const token = req.cookies.token

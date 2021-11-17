@@ -7,8 +7,8 @@ export class TextModule extends BaseModule {
     @prop()
     private content: string;
 
-    constructor (moduleId: string, content = '') {
-      super(moduleId, 'text')
+    constructor (moduleId: string, content = '', place = 0) {
+      super(moduleId, 'text', place)
       this.content = content
     }
 

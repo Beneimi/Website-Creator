@@ -74,7 +74,7 @@ export default class HomepageComponent extends Component<{},{}>{
         }
         const pageElements = this.state.userData.pages.map( (page) =>
             <li className='home-page-list-element'>
-                <Link className='home-page-list-element-title' to={{pathname: `/page/${page.url}`, state: {pageId: page.id}}}>
+                <Link className='home-page-list-element-title' to={{pathname: `/page/${this.state.userData.user.name}/${page.url}`, state: {pageId: page.id}}}>
                     {page.title}
                 </Link>
                 <span> - </span>
@@ -89,7 +89,7 @@ export default class HomepageComponent extends Component<{},{}>{
 
         const newPageElement = <li className='home-page-list-element'>
             <Link className='home-page-list-element-title' to={`/create`}>
-                Create new Page
+                Új oldal létrehozása
             </Link>
         </li>
 
@@ -100,10 +100,9 @@ export default class HomepageComponent extends Component<{},{}>{
         if(this.state.loggedIn) {
             return <div className='home-page-container'>
                 <h1>Hello {this.state.userData.user.name}</h1>
-                <p>You are logged in as <b>{this.state.userData.user.role}</b></p>
-                <p>Your pages:</p>
+                <p><b>Az oldalaid:</b></p>
                 {this.getTitleList()}
-                <button onClick={this.logOut.bind(this)}>Log out</button>
+                <button onClick={this.logOut.bind(this)}>Kijelentkezés</button>
             </div>
         }
 

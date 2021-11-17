@@ -1,5 +1,5 @@
 import React, {Component, FormEvent, SyntheticEvent} from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {container, injectable} from "tsyringe";
 import {UserService} from "../services/UserService";
 
@@ -63,19 +63,24 @@ export default class SignUpComponent extends Component<{},signInData>{
         if(this.state.signedUp) {
             return <Redirect to={{pathname:'/home'}}/>
         }
-        return <div className='center-form'>
-            <form method='POST' onSubmit={this.handleSubmit.bind(this)}>
-                <label className='login-label'>Email</label> <br/>
-                <input name='email' placeholder='email' type="text" onChange={this.handleInputChange.bind(this)}/> <br/>
-                <label className='login-label'>Felhasználónév</label> <br/>
-                <input name='userName' placeholder='név' type="text" onChange={this.handleInputChange.bind(this)}/><br/>
-                <label className='login-label'>Jelszó</label> <br/>
-                <input name='password' placeholder='jelszó' type="text" onChange={this.handleInputChange.bind(this)}/><br/>
-                <label className='login-label'>Jelszó újra</label> <br/>
-                <input name='passwordAgain' placeholder='jelszó újra' type="text" onChange={this.handleInputChange.bind(this)}/> <br/>
-                <input type='submit' title='Regisztrálok'/>
-            </form>
-            {this.state.errorMessage ? this.state.errorMessage : ''}
+        return <div>
+            <Link className='home-button' to={{pathname: `/home`}}>
+            Vissza a kezdőlapra
+        </Link>
+            <div className='center-form'>
+                <form method='POST' onSubmit={this.handleSubmit.bind(this)}>
+                    <label className='login-label'>Email</label> <br/>
+                    <input name='email' type="text" onChange={this.handleInputChange.bind(this)}/> <br/>
+                    <label className='login-label'>Felhasználónév</label> <br/>
+                    <input name='userName' type="text" onChange={this.handleInputChange.bind(this)}/><br/>
+                    <label className='login-label'>Jelszó</label> <br/>
+                    <input name='password' type="password" onChange={this.handleInputChange.bind(this)}/><br/>
+                    <label className='login-label'>Jelszó újra</label> <br/>
+                    <input name='passwordAgain' type="password" onChange={this.handleInputChange.bind(this)}/> <br/>
+                    <input type='submit' title='Regisztrálok'/>
+                </form>
+                {this.state.errorMessage ? this.state.errorMessage : ''}
+            </div>
         </div>
     }
 

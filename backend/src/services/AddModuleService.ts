@@ -10,10 +10,12 @@ export class AddModuleService {
     public static async process (data: EditModuleData, token) {
         await ValidateUserService.process(token)
 
-        console.log('-----------------------------------------------------')
-        console.log(inspect(data.module))
-        console.log('-----------------------------------------------------')
+
         const module = ModuleMapper.toDomain(data.module)
+
+        console.log('-----------------------------------------------------')
+        console.log(inspect(module))
+        console.log('-----------------------------------------------------')
 
         await PageRepository.addModule(data.pageId, module)
 

@@ -15,9 +15,10 @@ export class BaseModule {
     @prop()
     protected place?: number;
 
-    constructor (moduleId: string, type: ModuleType) {
-      this._id = moduleId || new mongoose.Types.ObjectId().toString()
-      this.type = type
+    constructor (moduleId: string, type: ModuleType, place = 0) {
+        this._id = moduleId || new mongoose.Types.ObjectId().toString()
+        this.type = type
+        this.place = place
     }
 
     public setPlace (place: number) {

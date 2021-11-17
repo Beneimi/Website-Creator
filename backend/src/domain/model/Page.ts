@@ -54,7 +54,7 @@ export class Page {
       throw new Error(`Module with id ${module.getId()} not found, use addModule() to add it to the page`)
     }
 
-    voteForModule(moduleId: string, optionId) {
+    voteForModule(moduleId: string, optionId: string) {
         const foundIndex = this.modules.findIndex(m => m.getId() === moduleId)
         if(foundIndex !== -1) {
             if(this.modules[foundIndex].getType() !== ModuleTypeEnum.PollModule) {

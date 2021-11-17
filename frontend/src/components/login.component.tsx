@@ -58,11 +58,11 @@ export default class LoginComponent extends Component<{},loginData>{
             <form method='POST' onSubmit={this.handleSubmit.bind(this)}>
                 <input name='email' placeholder='email' type="text" onChange={this.handleInputChange.bind(this)}/>
                 <p></p>
-                <input name='password' placeholder='password' type="text" onChange={this.handleInputChange.bind(this)}/>
+                <input name='password' placeholder='jelszó' type="password" onChange={this.handleInputChange.bind(this)}/>
                 <p></p>
                 <input type='submit' title='Log in'/>
             </form>
-            {this.state.errorMessage ? this.state.errorMessage : ''}
+            {this.state.errorMessage ? <p>{this.state.errorMessage}</p> : ''}
             <Link to={{pathname: `/signup`}}>
                 Még nincs fiókod?
             </Link>

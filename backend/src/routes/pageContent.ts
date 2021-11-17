@@ -8,6 +8,7 @@ const router = Router()
 
 router.get('/:userName/:pageUrl', async (req, res) => {
   try {
+    console.log(inspect(req.params))
     const user = await UserRepository.getUserByUserName(req.params.userName)
     const page = await PageRepository.getPagesByOwnerAndUrl(user._id, req.params.pageUrl)
     console.log(inspect(page))
@@ -21,7 +22,6 @@ router.get('/:userName/:pageUrl', async (req, res) => {
 router.get('/:id', verifyToken, async (req, res) => {
   try {
     const page = await GetPageService.process(req.params.id)
-    console.log('sending ' + inspect(page))
     res.status(200).send(page)
   } catch (error) {
     console.log(error)

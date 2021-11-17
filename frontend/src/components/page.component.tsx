@@ -36,12 +36,10 @@ export default class PageComponent extends Component<RouteComponentProps<Locatio
     fetchPageById(pageId: string){
         axios.get(`http://localhost:8080/api/${pageId}/`, {headers:{'auth-token':'token'}, withCredentials: true})
             .then(response => {
-                console.log(response.data)
                 const pageDTO = response.data as PageDTO
                 if(!pageDTO) {
                     this.setState({fetched: true, pageId: pageId, page: undefined });
                 }
-                console.log(response.data)
                 const page = PageMapper.toDomain(response.data as PageDTO)
                 this.setState({fetched: true, pageId: pageId, page: page });
             }).catch(e => {
@@ -52,12 +50,10 @@ export default class PageComponent extends Component<RouteComponentProps<Locatio
     fetchPageByOwnerNameAndUrl(userName: string, url: string){
         axios.get(`http://localhost:8080/api/${userName}/${url}`, {headers:{'auth-token':'token'}, withCredentials: true})
             .then(response => {
-                console.log(response.data)
                 const pageDTO = response.data as PageDTO
                 if(!pageDTO) {
                     this.setState({fetched: true, pageId: '', page: undefined });
                 }
-                console.log(response.data)
                 const page = PageMapper.toDomain(response.data as PageDTO)
                 this.setState({fetched: true, pageId: page._id, page: page });
             }).catch(e => {
@@ -69,38 +65,80 @@ export default class PageComponent extends Component<RouteComponentProps<Locatio
         if(!this.state.fetched) {
             this.fetchPageById(this.state.pageId)
         }
-        const moduleComponents: any = []
+        const leftModuleComponents: any = []
+        const rightModuleComponents: any = []
+        const middleModuleComponents: any = []
 
         this.state.page.modules.forEach( module => {
             switch (module.getType()) {
                 case "text": {
-                    moduleComponents.push(<TextModuleComponent key={module.getId()} module={module as unknown as TextModule} editable={false} pageId={this.state.pageId}/>)
+                    switch (module.getPlace()) {
+                        case 0: {
+                            leftModuleComponents.push(<TextModuleComponent key={module.getId()} module={module as unknown as TextModule} editable={false} pageId={this.state.pageId}/>)
+                            break
+                        }
+                        case 1: {
+                            middleModuleComponents.push(<TextModuleComponent key={module.getId()} module={module as unknown as TextModule} editable={false} pageId={this.state.pageId}/>)
+                            break
+                        }
+                        case 2: {
+                            rightModuleComponents.push(<TextModuleComponent key={module.getId()} module={module as unknown as TextModule} editable={false} pageId={this.state.pageId}/>)
+                            break
+                        }
+                        default: {
+                            break
+                        }
+                    }
                     break
                 }
 
                 case "poll": {
-                    moduleComponents.push(<PollModuleComponent key={module.getId()} pageId={this.state.pageId} module={module as unknown as PollModule}/>)
+                    switch (module.getPlace()) {
+                        case 0: {
+                                leftModuleComponents.push(<PollModuleComponent key={module.getId()} module={module as unknown as PollModule} editable={false}  pageId={this.state.pageId} />)
+                                break
+                        }
+                        case 1: {
+                                middleModuleComponents.push(<PollModuleComponent key={module.getId()} module={module as unknown as PollModule} editable={false}  pageId={this.state.pageId} />)
+                                break
+                        }
+                        case 2: {
+                                rightModuleComponents.push(<PollModuleComponent key={module.getId()} module={module as unknown as PollModule} editable={false}  pageId={this.state.pageId} />)
+                                break
+                        }
+                    }
                 }
-            }
-        })
+        }})
 
-        return moduleComponents
+        return <div  className='moduleContainer'>
+            <div className='leftColumn'>
+                {leftModuleComponents}
+            </div>
+            <div className='middleColumn'>
+                {middleModuleComponents}
+            </div>
+            <div className='rightColumn'>
+                {rightModuleComponents}
+            </div>
+        </div>
     }
 
     render() {
         if(this.state.fetched) {
-            return <div className='page'>
+
+
+            return <div>
                 <Link className='home-button' to={{pathname: `/home`}}>
-                Vissza a kezdőlapra
+                    Vissza a kezdőlapra
                 </Link>
-                <h1>{this.state.page.title}</h1>
-                <div className='moduleContainer'>
-                {this.getModuleComponents()}
+                <div className='page'>
+                    <h1>{this.state.page.title}</h1>
+                    {this.getModuleComponents()}
                 </div>
             </div>
 
         }
 
-        return 'Waiting for fetch'
+        return ''
     }
 }

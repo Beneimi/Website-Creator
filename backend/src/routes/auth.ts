@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { CreateUserService } from '../services/CreateUserService'
 import { LoginUserService } from '../services/LoginUserService'
 import { isTokenValid } from '../security'
-import { getMillisecondByMinute } from '../../../frontend/src/utils'
+import {getMillisecondByMinute, tokenExpiryInMinutes} from '../../../frontend/src/utils'
 
 const router = Router()
 
@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     const loginData = req.body
     const token = await LoginUserService.process(loginData)
     res.cookie('token', token, {
-      expires: new Date(Date.now() + getMillisecondByMinute(120)),
+      expires: new Date(Date.now() + getMillisecondByMinute(tokenExpiryInMinutes)),
       httpOnly: true
     })
       .send('Logged in')

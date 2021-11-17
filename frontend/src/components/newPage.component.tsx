@@ -4,6 +4,7 @@ import {Link, Redirect} from "react-router-dom";
 import {Page} from "../domain/model/Page";
 import {PageDTO} from "../domain/DTO/PageDTO";
 import {PageMapper} from "../domain/mappers/PageMapper";
+import {Editor} from "@tinymce/tinymce-react";
 
 interface NewPageState {
     title: string,
@@ -43,10 +44,12 @@ export default class NewPageComponent extends Component<{},NewPageState> {
             </Link>
             <div className='center-form'>
                 <form method='POST' onSubmit={this.handleSubmit.bind(this)}>
+                    <p>Cím</p>
                     <input name='title' placeholder='Cím' type="text" required={true} onChange={(e) => this.setState( {title: e.currentTarget.value})}/>
-                    <p></p>
-                    <input name='content' placeholder='Bevezető'  type="text" onChange={(e) => this.setState( {content: e.currentTarget.value})}/>
-                    <p></p>
+                    <p>Bevezető</p>
+                    <Editor
+                        onChange={(evt, editor) => this.setState({content: editor.getContent() })}
+                    />
                     <input type='submit' title='Létrehozás'/>
                 </form>
             </div>

@@ -7,9 +7,10 @@ import {ModuleTypeEnum} from "../domain/interfaces";
 import {inspect} from "util";
 import {Editor} from "@tinymce/tinymce-react";
 import {PollModule} from "../domain/model/modules/PollModule";
-import {PollOption} from "../domain/model/PollOption";
+import {Redirect} from "react-router-dom";
 
 const initialState = {
+    faliedToLoad: false,
     typeSelected: false,
     editing: false,
     moduleType:  ModuleTypeEnum.TextModule as ModuleTypeEnum,
@@ -28,6 +29,10 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
     handleTypeSelection(e:React.ChangeEvent<HTMLSelectElement>){
         console.log('select type' + inspect(e.currentTarget.value))
         this.setState({moduleType: e.currentTarget.value as ModuleTypeEnum})
+    }
+
+    handlePlaceSelection(e:React.ChangeEvent<HTMLSelectElement>){
+        this.setState({module: this.state.module?.setPlace(Number(e.currentTarget.value))})
     }
 
     handleTypeSelected(e:React.FormEvent){
@@ -52,6 +57,10 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
             .then((response) => {
                 this.setState({editing: false});
             }).catch(e => {
+            if (e.response.status === 401) {
+                this.setState({failedToLoad: true})
+                return
+            }
             console.log(e)
             throw new Error(e);
         });
@@ -72,12 +81,21 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
     }
 
     renderTextModuleEditor() {
-        return <div className='module'>
+        return <div className='module middleModule'>
             <form method='POST' onSubmit={this.saveModule.bind(this)}>
+                <p>Tartalom:</p>
                 <Editor
                     onChange={(evt, editor) => this.setState({module: (this.state.module as TextModule).setContent(editor.getContent()) })}
                 />
-                <input value='Létrehozás' type="submit"/>
+                <p>Pozíció:</p>
+                <select value={this.state.module?.getPlace()?.toString() || "0"} onChange={this.handlePlaceSelection.bind(this)}>
+                    <option value="0">Bal</option>
+                    <option value="1">Közép</option>
+                    <option value="2">Jobb</option>
+                </select>
+                <p>
+                    <input value='Létrehozás' type="submit"/>
+                </p>
             </form>
         </div>
     }
@@ -87,21 +105,30 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
     }
 
     renderPollModuleEditor() {
-        return <div className='module'>
+        return <div className='module middleModule'>
             <form method='POST' onSubmit={this.handlePollModuleSave.bind(this)}>
-                <input name='question' placeholder='Szavazás címe' type="text" onChange={((e:FormEvent<HTMLInputElement>) => {
+                <p>Szavazás címe:</p>
+                <input name='question' type="text" onChange={((e:FormEvent<HTMLInputElement>) => {
                     this.setState({module: (this.state.module as PollModule).setQuestion(e.currentTarget.value)})
                     }).bind(this)
                 }/>
-                <input name='options' placeholder='Lehetőségek (vesszővel elválasztva)' type="text" onChange={((e:FormEvent<HTMLInputElement>) => {
+                <input name='options' type="text" onChange={((e:FormEvent<HTMLInputElement>) => {
                     this.setState({optionsCache: e.currentTarget.value})
                 }).bind(this)}/>
+                <select value={this.state.module?.getPlace()?.toString() || "0"} onChange={this.handlePlaceSelection.bind(this)}>
+                    <option value="0">Bal</option>
+                    <option value="1">Közép</option>
+                    <option value="2">Jobb</option>
+                </select>
                 <input value='Létrehozás' type="submit"/>
             </form>
         </div>
     }
 
     render() {
+        if(this.state.faliedToLoad) {
+            return <Redirect to={{pathname:'/login'}}/>
+        }
         if(this.state.editing) {
             if(this.state.typeSelected) {
                 switch(this.state.moduleType){
@@ -113,9 +140,10 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
                     }
                 }
             }
-            return <div className='module'>
+            return <div className='module middleModule'>
                 <form method='POST' onSubmit={this.handleTypeSelected.bind(this)}>
                     <label >Válassz modul típust!</label>
+                    <p></p>
                     <select value={this.state.moduleType} onChange={this.handleTypeSelection.bind(this)}>
                         <option value="text">Szöveges</option>
                         <option value="poll">Szavazás</option>
@@ -125,7 +153,6 @@ export default class NewModuleComponent extends Component<{pageId: string , reRe
             </div>
         }
 
-        return <div className='module'><button className='edit-module-button' onClick={this.handleOnEdit.bind(this)}>Új modul</button></div>
-
+        return <div className='newModuleButton'><button className='edit-module-button' onClick={this.handleOnEdit.bind(this)}>Új modul</button></div>
     }
 }
